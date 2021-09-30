@@ -38,15 +38,14 @@
       </template>
     </v-navigation-drawer>
 
-    <v-toolbar flat app color="orange accent-2" dark>
+    <v-app-bar flat app color="orange accent-2" dark>
       <v-toolbar-side-icon @click="drawer = !drawer" class="material-icons"
         >menu</v-toolbar-side-icon
       >
-      <v-toolbar-title class="ml-3">OrangeApp</v-toolbar-title>
+      <v-toolbar-title class="ml-3"> {{ titleapp }} </v-toolbar-title>
       <v-spacer></v-spacer>
-    </v-toolbar>
+    </v-app-bar>
 
-    
     <v-main>
       <router-view></router-view>
     </v-main>
@@ -70,10 +69,11 @@ export default {
 
   data: () => ({
     drawer: false,
+    titleapp: "OrangeApp",
 
     items: [
       { title: "Home", icon: "mdi-home", link: "/" },
-      { title: "Login", icon: "mdi-login", link: "/login-register" },
+      { title: "Login", icon: "mdi-login", link: "/login" },
       { title: "Dashboard", icon: "mdi-view-dashboard", link: "/admin/dashboard" },
       { title: "Mis productos", icon: "mdi-clipboard-list", link: "/admin/myproducts" },
       { title: "Producto prueba", icon: "mdi-briefcase-eye", link: "/user/listproducts" },

@@ -14,35 +14,34 @@ const routes = [
     component: Home
   },
   {
-    path: '/login-register',
+    path: '/login',
     name: 'login',
+    component: Login
+  },
+  {
+    path: '/register',
+    name: 'register',
     component: Login
   },
   {
     path: '/about',
     name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    component: () => import('../views/About.vue')
   },
   {
     path: '/admin/dashboard',
     name: 'dashboard',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/admin/CrudProductos.vue')
+    component: () => import('../views/admin/CrudProductos.vue')
   },
   {
     path: '/admin/myproducts',
     name: 'Listproducts',
-    component: () => import(/* webpackChunkName: "about" */ '../views/admin/MyListProducts.vue')
+    component: () => import('../views/admin/MyListProducts.vue')
   },
   {
     path: '/user/listproducts',
     name: 'catalog',
-    component: () => import(/* webpackChunkName: "about" */ '../views/user/ListProducts.vue')
+    component: () => import('../views/user/ListProducts.vue')
   }
 ]
 

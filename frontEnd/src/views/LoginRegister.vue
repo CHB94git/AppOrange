@@ -1,6 +1,6 @@
 <template>
   <v-app id="inspire">
-    <v-content>
+    <v-main>
       <v-container class="fill-height" fluid>
         <v-row align="center" justify="center">
           <v-col cols="12" sm="8" md="8">
@@ -63,7 +63,7 @@
                         </h5>
                       </v-card-text>
                       <div class="text-center">
-                        <v-btn rounded outlined dark @click="step++" class="mb-2"
+                        <v-btn rounded outlined dark @click="step++, GoToRegister()" class="mb-2"
                           >REGISTRARSE</v-btn
                         >
                       </div>
@@ -83,7 +83,7 @@
                         </h5>
                       </v-card-text>
                       <div class="text-center">
-                        <v-btn rounded outlined dark @click="step--" class="mb-1"
+                        <v-btn rounded outlined dark @click="step--, GoToLogin()" class="mb-1"
                           >Inicia sesión</v-btn
                         >
                       </div>
@@ -155,7 +155,7 @@
           </v-col>
         </v-row>
       </v-container>
-    </v-content>
+    </v-main>
   </v-app>
 </template>
 
@@ -166,6 +166,14 @@ export default {
   }),
   props: {
     source: String,
+  },
+  methods: {
+    GoToLogin() {
+      this.$router.push("/login");
+    },
+    GoToRegister() {
+      this.$router.push("/register");
+    },
   },
 };
 </script>

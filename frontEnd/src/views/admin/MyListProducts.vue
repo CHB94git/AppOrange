@@ -8,7 +8,7 @@
           </v-img>
 
           <v-card-text class="text--primary">
-            <div><strong>Descripción del producto</strong></div>
+            <div><strong>{{desc}}</strong></div>
             <v-divider></v-divider>
             <div v-text="card.description"></div>
             <div><strong>Precio: </strong> $ {{ card.price }}</div>
@@ -32,6 +32,7 @@
 <script>
 export default {
   data: () => ({
+    desc: "Descripción",
     page: 1,
     cards: [
       {
