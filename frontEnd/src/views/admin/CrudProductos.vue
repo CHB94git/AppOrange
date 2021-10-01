@@ -4,19 +4,25 @@
       :headers="headers"
       :items="products"
       sort-by="stock"
-      class="elevation-8 rounded-lg"
+      class="elevation-3 rounded-lg"
     >
       <template v-slot:top>
         <v-toolbar flat class="rounded-lg" md-4>
-          <v-toolbar-title>Mis Productos</v-toolbar-title>
+          <v-toolbar-title>Productos</v-toolbar-title>
 
           <v-divider class="mx-3" inset vertical></v-divider>
 
           <v-spacer></v-spacer>
-          
+
           <v-dialog v-model="dialog" max-width="600px">
             <template v-slot:activator="{ on, attrs }">
-              <v-btn color="green accent-4" dark class="mb-2 elevation-5" v-bind="attrs" v-on="on">
+              <v-btn
+                color="orange accent-2"
+                dark
+                class="mb-2 elevation-5"
+                v-bind="attrs"
+                v-on="on"
+              >
                 Nuevo producto
               </v-btn>
             </template>
@@ -98,9 +104,7 @@
               >
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="red" text @click="closeDelete"
-                  >Cancelar</v-btn
-                >
+                <v-btn color="red" text @click="closeDelete">Cancelar</v-btn>
                 <v-btn color="green" text @click="deleteItemConfirm"
                   >Aceptar</v-btn
                 >
@@ -112,12 +116,10 @@
       </template>
 
       <template v-slot:item.actions="{ item }">
-        <v-icon color="orange" class="mr-2" @click="editItem(item)">
+        <v-icon color="green accent-4" class="mr-2" @click="editItem(item)">
           mdi-pencil
         </v-icon>
-        <v-icon color="red" @click="deleteItem(item)">
-          mdi-delete
-        </v-icon>
+        <v-icon color="red" @click="deleteItem(item)"> mdi-delete </v-icon>
       </template>
 
       <template v-slot:no-data>
@@ -195,7 +197,7 @@ export default {
           name: "Arroz",
           unit: "Arroba",
           price: 25000,
-          image: '',
+          image: "",
           stock: 24,
           desc: "Producto económico con alto valor nutricional",
         },

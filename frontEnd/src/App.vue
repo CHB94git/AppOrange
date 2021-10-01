@@ -87,6 +87,7 @@ export default {
         link: "/user/listproducts",
       },
       { title: "About", icon: "mdi-forum", link: "/about" },
+      { title: "Team", icon: "mdi-microsoft-teams", link: "/team" },
     ],
   }),
 };

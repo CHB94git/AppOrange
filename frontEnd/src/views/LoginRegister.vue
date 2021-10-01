@@ -58,7 +58,7 @@
                     </v-col>
                     <v-col cols="12" md="4" class="brown lighten-1">
                       <v-card-text class="white--text ">
-                        <h1 class="text-center display-1 mt-8">No tienes una cuenta?</h1>
+                        <h1 class="text-center display-1 mt-8"><strong>No tienes una cuenta?</strong></h1>
                         <h5 class="text-center">
                           Ingresa tus datos personales para unirte a nosotros
                         </h5>
@@ -77,7 +77,7 @@
                     <v-col cols="12" md="4" class="green accent-4">
                       <v-card-text class="white--text mt-12">
                         <h1 class="text-center display-1 ">
-                          Ya tienes una cuenta?
+                          <strong>Ya tienes una cuenta?</strong> 
                         </h1>
                         <h5 class="text-center">
                           Ingresa tus credenciales para iniciar sesión en tu cuenta

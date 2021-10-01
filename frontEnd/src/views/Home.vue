@@ -16,7 +16,7 @@
       >
         <v-toolbar flat class="elevation-10" color="green accent-4">
           <v-spacer></v-spacer>
-          <v-toolbar-title> Ir a la Sección: {{ item.text }} </v-toolbar-title>
+          <v-toolbar-title> {{categorie}} {{ item.text }} </v-toolbar-title>
           <v-spacer></v-spacer>
         </v-toolbar>
       </v-carousel-item>
@@ -28,6 +28,7 @@
 export default {
   data() {
     return {
+      categorie: "Ir a la categoría:",
       items: [
         {
           src: "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=870&q=80",
