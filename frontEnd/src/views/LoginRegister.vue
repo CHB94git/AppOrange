@@ -1,10 +1,9 @@
 <template>
   <v-app id="inspire">
-    <v-main>
       <v-container class="fill-height" fluid>
         <v-row align="center" justify="center">
-          <v-col cols="12" sm="8" md="8">
-            <v-card class="elevation-12 rounded-xl">
+          <v-col cols="12" sm="6" md="8" xs="4">
+            <v-card class="elevation-12 rounded-lg">
               <v-img
                 width="100%"
                 height="150px"
@@ -42,9 +41,11 @@
                           <v-text-field
                             id="password"
                             label="Contraseña"
+                            :type="showPassword ? 'text' : 'password'"
+                            :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+                            @click:append="showPassword = !showPassword"
                             name="password"
                             prepend-icon="lock"
-                            type="password"
                             color="brown lighten-1"
                           />
                         </v-form>
@@ -126,18 +127,18 @@
                           <v-text-field
                             id="password"
                             label="Contraseña"
+                            type="password"
                             name="password"
                             prepend-icon="lock"
-                            type="password"
                             color="green accent-4"
                           />
 
                           <v-text-field
-                            id="password"
+                            id="passwordConfirm"
                             label="Confirmar Contraseña"
-                            name="password"
-                            prepend-icon="lock"
                             type="password"
+                            name="passwordConfirm"
+                            prepend-icon="lock"
                             color="green accent-4"
                           />
                         </v-form>
@@ -155,7 +156,6 @@
           </v-col>
         </v-row>
       </v-container>
-    </v-main>
   </v-app>
 </template>
 
@@ -163,6 +163,9 @@
 export default {
   data: () => ({
     step: 1,
+    email: '',
+    password: '',
+    showPassword: false,
   }),
   props: {
     source: String,
