@@ -4,7 +4,7 @@
       :headers="headers"
       :items="products"
       sort-by="stock"
-      class="elevation-3 rounded-lg"
+      class="elevation-15 rounded-lg"
     >
       <template v-slot:top>
         <v-toolbar flat class="rounded-lg" md-4>
@@ -19,7 +19,7 @@
               <v-btn
                 color="orange accent-2"
                 dark
-                class="mb-2 elevation-5"
+                class="mb-2 elevation-7"
                 v-bind="attrs"
                 v-on="on"
               >
@@ -42,7 +42,7 @@
                       ></v-text-field>
                     </v-col>
 
-                    <v-col class="d-flex" cols="12" sm="6">
+                    <v-col cols="12" sm="6">
                       <v-select
                         v-model="editedItem.unit"
                         :items="units"
@@ -50,7 +50,7 @@
                       ></v-select>
                     </v-col>
 
-                    <v-col cols="12" sm="6">
+                    <v-col cols="12" md="4">
                       <v-text-field
                         v-model="editedItem.price"
                         label="Precio"
@@ -59,13 +59,22 @@
                       ></v-text-field>
                     </v-col>
 
-                    <v-col cols="12" sm="6">
+                    <v-col cols="12" md="4">
                       <v-text-field
                         v-model="editedItem.stock"
                         label="Stock"
                         type="number"
                       ></v-text-field>
                     </v-col>
+
+                    <v-col cols="12" md="4">
+                      <v-select
+                        v-model="editedItem.category"
+                        :items="categories"
+                        label="Categoría"
+                      ></v-select>
+                    </v-col>
+
 
                     <v-col cols="12">
                       <v-file-input
@@ -135,6 +144,7 @@ export default {
   data: () => ({
     rules: [(v) => v.length <= 250 || "Max 250 carácteres"],
     units: ["Libra", "Kilo", "Arroba", "Bulto", "Canasta", "Carga"],
+    categories: ["Verduras", "Frutas", "Cereales", "Hortalizas", "Tubérculos", "Granos"],
     dialog: false,
     dialogDelete: false,
     headers: [
@@ -147,6 +157,7 @@ export default {
       { text: "Precio", value: "price" },
       { text: "Imagen", value: "image" },
       { text: "Stock", value: "stock" },
+      { text: "Categoría", value: "category" },
       { text: "Descripción", value: "desc" },
       { text: "Acciones", value: "actions", sortable: false },
     ],
@@ -159,6 +170,7 @@ export default {
       price: "",
       image: "",
       stock: "",
+      category: "",
       desc: "",
     },
     defaultItem: {
@@ -167,6 +179,7 @@ export default {
       price: "",
       image: "",
       stock: "",
+      category: "",
       desc: "",
     },
   }),
@@ -199,6 +212,7 @@ export default {
           price: 25000,
           image: "",
           stock: 24,
+          category: "Granos",
           desc: "Producto económico con alto valor nutricional",
         },
         {
@@ -207,6 +221,7 @@ export default {
           price: 2500,
           image: "",
           stock: 30,
+          category: "Granos",
           desc: "Producto reciente y fresco",
         },
         {
@@ -215,6 +230,7 @@ export default {
           price: 4700,
           image: "",
           stock: 15,
+          category: "Granos",
           desc: "Producto disponible por kg",
         },
         {
@@ -223,6 +239,7 @@ export default {
           price: 45000,
           image: "",
           stock: 250,
+          category: "Tubérculos",
           desc: "Producto originario de las tierras boyacenses",
         },
         {
@@ -231,6 +248,7 @@ export default {
           price: 130000,
           image: "",
           stock: 5,
+          category: "Cereales",
           desc: "Producto multiuso",
         },
         {
@@ -239,6 +257,7 @@ export default {
           price: 60000,
           image: "",
           stock: 10,
+          category: "Frutas",
           desc: "Producto fresco proveniente de la sabana de Bogotá",
         },
         {
@@ -247,6 +266,7 @@ export default {
           price: 3000,
           image: "",
           stock: 85,
+          category: "Frutas",
           desc: "Producto empaquetado por bolsas",
         },
         {
@@ -255,6 +275,7 @@ export default {
           price: 60400,
           image: "",
           stock: 78,
+          category: "Frutas",
           desc: "Producto importado de Ecuador",
         },
       ];

@@ -1,9 +1,9 @@
 <template>
   <v-container fluid>
     <v-carousel
-      class="my-1"
+      class="my-1 rounded-lg"
       cycle
-      height="550"
+      height="90vh"
       width="100%"
       show-arrows-on-hover
     >
@@ -49,6 +49,10 @@ export default {
         {
           src: "https://images.pexels.com/photos/4451875/pexels-photo-4451875.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
           text: "Tubérculos",
+        },
+        {
+          src: "https://images.pexels.com/photos/1192053/pexels-photo-1192053.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+          text: "Granos",
         },
       ],
     };
