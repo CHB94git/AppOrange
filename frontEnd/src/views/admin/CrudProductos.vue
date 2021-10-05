@@ -222,7 +222,7 @@ export default {
           image: "",
           stock: 30,
           category: "Granos",
-          desc: "Producto reciente y fresco",
+          desc: "Producto reciente y fresco por libras",
         },
         {
           name: "Frijoles",
