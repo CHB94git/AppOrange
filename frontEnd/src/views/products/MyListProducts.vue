@@ -28,7 +28,7 @@
     
       <v-dialog v-model="dialog" persistent max-width="400px">
         
-        <v-card :loading="loading" class="mx-auto" max-width="100%">
+        <v-card :loading="loading" class="mx-auto" max-width="95%">
           <template slot="progress">
             <v-progress-linear
               color="deep-purple"

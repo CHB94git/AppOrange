@@ -27,8 +27,17 @@ module.exports = class ProductController {
 
     static async create(req, res) {
         try {
-            const srcname = req.file.filename;
             let product = req.body;
+            if (req.file != undefined) {
+                const srcName = req.file.filename;
+                product.src = "/"+srcName;
+            }
+            if (product.id == undefined) {
+                res.status(400).json({ message: "El producto no puede ser guardado sin id" });
+            } else {
+                product = await productModel.create(product);
+                res.status(201).json(product);
+            }
             product.src = srcname;
             product = await productModel.create(product);
             res.status(201).json(product);
@@ -52,6 +61,17 @@ module.exports = class ProductController {
         try {
             const id = req.params.id;
             await productModel.deleteOne({ id: id });
+            res.status(200).json();
+        } catch (err) {
+            res.status(400).json({ message: err.message });
+        }
+    }
+
+    static async changeProductSrc(req, res) {
+        try {
+            const id = req.params.id;
+            const srcName = req.file.filename;
+            await productModel.updateOne({ "id": id }, { "src": "/" + srcName });
             res.status(200).json();
         } catch (err) {
             res.status(400).json({ message: err.message });

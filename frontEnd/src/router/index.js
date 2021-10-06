@@ -37,12 +37,12 @@ const routes = [
   {
     path: '/admin/dashboard',
     name: 'dashboard',
-    component: () => import('../views/admin/CrudProductos.vue')
+    component: () => import('../views/products/CrudProductos.vue')
   },
   {
     path: '/admin/myproducts',
     name: 'Listproducts',
-    component: () => import('../views/admin/MyListProducts.vue')
+    component: () => import('../views/products/MyListProducts.vue')
   },
   {
     path: '/user/listproducts',
