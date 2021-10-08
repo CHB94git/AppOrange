@@ -14,7 +14,7 @@ module.exports = class ProductController {
     static async getById(req, res) {
         try {
             const id = req.params.id;
-            const product = await productModel.findOne({ "id": id });
+            const product = await productModel.findOne({ _id: id });
             if (product == null) {
                 res.status(404).json({ message: "No encontrado en la base de datos" });
             } else {
@@ -30,7 +30,7 @@ module.exports = class ProductController {
             let product = req.body;
             if (req.file != undefined) {
                 const srcName = req.file.filename;
-                product.src = "/"+srcName;
+                product.src = "/" + srcName;
             }
             if (product.codeProduct == undefined) {
                 res.status(400).json({ message: "El producto no puede ser guardado sin código" });
@@ -38,9 +38,6 @@ module.exports = class ProductController {
                 product = await productModel.create(product);
                 res.status(201).json(product);
             }
-            product.src = srcname;
-            product = await productModel.create(product);
-            res.status(201).json(product);
         } catch (err) {
             res.status(400).json({ message: err.message });
         }
@@ -50,7 +47,7 @@ module.exports = class ProductController {
         try {
             const id = req.params.id;
             const product = req.body;
-            await productModel.updateOne({ id: id }, product);
+            await productModel.updateOne({ _id: id }, product);
             res.status(200).json()
         } catch (err) {
             res.status(400).json({ message: err.message })
@@ -71,7 +68,7 @@ module.exports = class ProductController {
         try {
             const id = req.params.id;
             const srcName = req.file.filename;
-            await productModel.updateOne({ "id": id }, { "src": "/" + srcName });
+            await productModel.updateOne({ _id: id }, { "src": "/" + srcName });
             res.status(200).json();
         } catch (err) {
             res.status(400).json({ message: err.message });

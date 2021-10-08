@@ -18,7 +18,7 @@
     <v-data-table
       :headers="headers"
       :items="products"
-      sort-by="id"
+      sort-by="codeProduct"
       class="elevation-15 rounded-lg"
       :search="search"
     >
@@ -44,90 +44,86 @@
             </template>
 
             <v-card max-width="98%">
-              <v-form
-                      @submit.prevent="save"
-                      ref="product"
-                      lazy-validation
-                    >
-              <v-card-title>
-                <span class="text-h5">{{ formTitle }}</span>
-              </v-card-title>
+              <v-form @submit.prevent="save" ref="product" lazy-validation>
+                <v-card-title>
+                  <span class="text-h5">{{ formTitle }}</span>
+                </v-card-title>
 
-              <v-card-text>
-                <v-container>
-                  <v-row>
-                    <v-col cols="12" sm="4">
-                      <v-text-field
-                        v-model="product.codeProduct"
-                        label="Código del producto"
-                      ></v-text-field>
-                    </v-col>
+                <v-card-text>
+                  <v-container>
+                    <v-row>
+                      <v-col cols="12" sm="4">
+                        <v-text-field
+                          v-model="product.codeProduct"
+                          label="Código del producto"
+                        ></v-text-field>
+                      </v-col>
 
-                    <v-col cols="12" sm="8">
-                      <v-text-field
-                        v-model="product.name"
-                        label="Nombre del producto"
-                      ></v-text-field>
-                    </v-col>
+                      <v-col cols="12" sm="8">
+                        <v-text-field
+                          v-model="product.name"
+                          label="Nombre del producto"
+                        ></v-text-field>
+                      </v-col>
 
-                    <v-col cols="12" sm="6">
-                      <v-select
-                        v-model="product.unit"
-                        :items="units"
-                        label="Unidad de medida"
-                      ></v-select>
-                    </v-col>
+                      <v-col cols="12" sm="6">
+                        <v-select
+                          v-model="product.unit"
+                          :items="units"
+                          label="Unidad de medida"
+                        ></v-select>
+                      </v-col>
 
-                    <v-col cols="12" sm="6">
-                      <v-text-field
-                        v-model="product.price"
-                        label="Precio"
-                        type="number"
-                        prefix="$"
-                      ></v-text-field>
-                    </v-col>
+                      <v-col cols="12" sm="6">
+                        <v-text-field
+                          v-model="product.price"
+                          label="Precio"
+                          type="number"
+                          prefix="$"
+                        ></v-text-field>
+                      </v-col>
 
-                    <v-col cols="12">
-                      <v-text-field
-                        v-model="product.src"
-                        label="Link imagen (fuente)"
-                      ></v-text-field>
-                    </v-col>
+                      <v-col cols="12">
+                        <v-text-field
+                          v-model="product.src"
+                          label="Link imagen (fuente)"
+                        ></v-text-field>
+                      </v-col>
 
-                    <v-col cols="12" sm="6">
-                      <v-text-field
-                        v-model="product.stock"
-                        label="Stock"
-                        type="number"
-                      ></v-text-field>
-                    </v-col>
+                      <v-col cols="12" sm="6">
+                        <v-text-field
+                          v-model="product.stock"
+                          label="Stock"
+                          type="number"
+                        ></v-text-field>
+                      </v-col>
 
-                    <v-col cols="12" sm="6">
-                      <v-select
-                        v-model="product.category"
-                        :items="categories"
-                        label="Categoría"
-                      ></v-select>
-                    </v-col>
+                      <v-col cols="12" sm="6">
+                        <v-select
+                          v-model="product.category"
+                          :items="categories"
+                          label="Categoría"
+                        ></v-select>
+                      </v-col>
 
-                    <v-col cols="12">
-                      <v-textarea
-                        v-model="product.description"
-                        counter
-                        label="Descripción"
-                        :rules="rules"
-                        rows="5"
-                      ></v-textarea>
-                    </v-col>
-                  </v-row>
-                </v-container>
-              </v-card-text>
+                      <v-col cols="12">
+                        <v-textarea
+                          v-model="product.description"
+                          counter
+                          label="Descripción"
+                          :rules="rules"
+                          rows="5"
+                        ></v-textarea>
+                      </v-col>
+                    </v-row>
+                  </v-container>
+                </v-card-text>
 
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="red" text @click="close"> Cancelar </v-btn>
-                <v-btn color="green" type="submit" text > Guardar </v-btn>
-              </v-card-actions>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn color="red" text @click="close"> Cancelar </v-btn>
+                  <v-btn color="green" type="submit" text> Guardar </v-btn>
+                </v-card-actions>
               </v-form>
             </v-card>
           </v-dialog>
@@ -179,7 +175,7 @@ import {
   getAllProducts,
   createProduct,
   updateProduct,
-  deleteProduct
+  deleteProduct,
 } from "../../controllers/ProductsController";
 
 export default {
@@ -254,12 +250,11 @@ export default {
     },
   },
 
-  created() {
+  mounted() {
     this.loadAllProducts();
   },
 
   methods: {
-
     loadAllProducts() {
       getAllProducts()
         .then((response) => {
@@ -270,65 +265,65 @@ export default {
 
     save() {
       if (this.productIndex > -1) {
-        this.updateProd();
+        this.update();
       } else {
-        this.createProd();
+        this.create();
       }
       this.close();
     },
 
-    createProd() {
+    create() {
       let request = null;
       const product = {
         codeProduct: this.product.codeProduct,
         name: this.product.name,
         unit: this.product.unit,
         price: this.product.price,
+        src: this.product.src,
         stock: this.product.stock,
         category: this.product.category,
         description: this.product.description,
       };
       request = createProduct(product);
-      
+
       request
         .then(() => {
           (this.color = "success"),
             (this.text = "El producto se ha creado correctamente!"),
             (this.snackbar = true);
+          this.loadAllProducts();
         })
         .catch((err) => console.error(err));
-        this.close();
-        this.loadAllProducts();
-    
+
+      this.close();
     },
 
-    updateProd() {
+    update() {
       const product = {
         codeProduct: this.product.codeProduct,
         name: this.product.name,
         unit: this.product.unit,
         price: this.product.price,
+        src: this.product.src,
         stock: this.product.stock,
         category: this.product.category,
         description: this.product.description,
       };
 
-      updateProduct(this._id, product)
+      updateProduct(this.product._id, product)
         .then((res) => {
           console.log(res);
           (this.color = "info"),
             (this.text = "El producto ha sido modificado correctamente!"),
             (this.snackbar = true);
+          this.loadAllProducts();
         })
         .catch((err) => console.error(err));
-        this.close();
-        this.loadAllProducts();
-
+      this.close();
     },
 
     editProduct(item) {
       this.productIndex = this.products.indexOf(item);
-      this.$router.push(`/products/${this.product._id}`);
       this.product = Object.assign({}, item);
       this.dialog = true;
     },
@@ -340,31 +335,38 @@ export default {
     },
 
     deleteItemConfirm() {
-      //this.products.splice(this.productIndex, 1);
-      //this.closeDelete();
-
-      deleteProduct(this.product._id)
-          .then(() => {
-            this.loadAllProducts();
-            this.closeDelete();
-          })
-          .catch((err) => console.error(err.response.data.message));
+      deleteProduct(this._id)
+        .then((res) => {
+          console.log(res);
+          //window.location.reload();
+          this.color = "success";
+          this.text = "El producto ha sido eliminado";
+          this.snackbar = true;
+          this.loadAllProducts();
+        })
+        .catch((error) => {
+          console.log(error);
+          this.color = "error";
+          this.text = "Fallido!, Ha ocurrido un error.";
+          this.snackbar = true;
+        });
+      this.closeDelete();
     },
 
     close() {
       this.dialog = false;
-      this.$nextTick(() => {
+      setTimeout(() => {
         this.product = Object.assign({}, this.default);
         this.productIndex = -1;
-      });
+      }, 300);
     },
 
     closeDelete() {
       this.dialogDelete = false;
-      this.$nextTick(() => {
+      setTimeout(() => {
         this.product = Object.assign({}, this.default);
         this.productIndex = -1;
-      });
+      }, 300);
     },
   },
 };
