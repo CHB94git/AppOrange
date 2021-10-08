@@ -4,13 +4,13 @@ const END_POINT = "/api/products";
 
 const getAllProducts = () => httpClient.get(END_POINT);
 
-const getById = (id) => httpClient.get(END_POINT+"/"+id);
+const getById = (_id) => httpClient.get(END_POINT+"/"+_id);
 
 const createProduct = (product) => httpClient.post(END_POINT, product);
 
-const updateProduct = (id, product) => httpClient.put(END_POINT+"/"+id, product);
+const updateProduct = (_id, product) => httpClient.put(END_POINT+"/"+_id, product);
 
-const deleteProduct = (id) => httpClient.delete(END_POINT+"/"+id);
+const deleteProduct = (_id) => httpClient.delete(END_POINT+"/"+_id);
 
 export{
     getAllProducts,

@@ -51,7 +51,7 @@
 export default {
   data: () => ({
     show: false,
-
+    show2: false,
     Team: [
       {
         src: require("../assets/img/team.svg"),

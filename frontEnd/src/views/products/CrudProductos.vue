@@ -1,10 +1,26 @@
 <template>
   <v-container fluid>
+    <v-card class="mx-auto mb-1 elevation-15">
+      <v-card-title>
+        <v-spacer></v-spacer>
+        <v-text-field
+          v-model="search"
+          append-icon="search"
+          label="Buscar..."
+          single-line
+          hide-details
+          color="#2C3A47"
+        >
+        </v-text-field>
+      </v-card-title>
+    </v-card>
+
     <v-data-table
       :headers="headers"
       :items="products"
-      sort-by="stock"
+      sort-by="id"
       class="elevation-15 rounded-lg"
+      :search="search"
     >
       <template v-slot:top>
         <v-toolbar flat class="rounded-lg" md-4>
@@ -27,7 +43,12 @@
               </v-btn>
             </template>
 
-            <v-card>
+            <v-card max-width="98%">
+              <v-form
+                      @submit.prevent="save"
+                      ref="product"
+                      lazy-validation
+                    >
               <v-card-title>
                 <span class="text-h5">{{ formTitle }}</span>
               </v-card-title>
@@ -35,59 +56,63 @@
               <v-card-text>
                 <v-container>
                   <v-row>
-                    <v-col cols="12" sm="6">
+                    <v-col cols="12" sm="4">
                       <v-text-field
-                        v-model="editedItem.name"
+                        v-model="product.codeProduct"
+                        label="Código del producto"
+                      ></v-text-field>
+                    </v-col>
+
+                    <v-col cols="12" sm="8">
+                      <v-text-field
+                        v-model="product.name"
                         label="Nombre del producto"
                       ></v-text-field>
                     </v-col>
 
                     <v-col cols="12" sm="6">
                       <v-select
-                        v-model="editedItem.unit"
+                        v-model="product.unit"
                         :items="units"
                         label="Unidad de medida"
                       ></v-select>
                     </v-col>
 
-                    <v-col cols="12" md="4">
+                    <v-col cols="12" sm="6">
                       <v-text-field
-                        v-model="editedItem.price"
+                        v-model="product.price"
                         label="Precio"
                         type="number"
                         prefix="$"
                       ></v-text-field>
                     </v-col>
 
-                    <v-col cols="12" md="4">
+                    <v-col cols="12">
                       <v-text-field
-                        v-model="editedItem.stock"
+                        v-model="product.src"
+                        label="Link imagen (fuente)"
+                      ></v-text-field>
+                    </v-col>
+
+                    <v-col cols="12" sm="6">
+                      <v-text-field
+                        v-model="product.stock"
                         label="Stock"
                         type="number"
                       ></v-text-field>
                     </v-col>
 
-                    <v-col cols="12" md="4">
+                    <v-col cols="12" sm="6">
                       <v-select
-                        v-model="editedItem.category"
+                        v-model="product.category"
                         :items="categories"
                         label="Categoría"
                       ></v-select>
                     </v-col>
 
-
-                    <v-col cols="12">
-                      <v-file-input
-                        accept="image/*"
-                        flat
-                        v-model="editedItem.image"
-                        label="Imagen del producto"
-                      ></v-file-input>
-                    </v-col>
-
                     <v-col cols="12">
                       <v-textarea
-                        v-model="editedItem.desc"
+                        v-model="product.description"
                         counter
                         label="Descripción"
                         :rules="rules"
@@ -101,8 +126,9 @@
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="red" text @click="close"> Cancelar </v-btn>
-                <v-btn color="green" text @click="save"> Guardar </v-btn>
+                <v-btn color="green" type="submit" text > Guardar </v-btn>
               </v-card-actions>
+              </v-form>
             </v-card>
           </v-dialog>
 
@@ -125,29 +151,53 @@
       </template>
 
       <template v-slot:item.actions="{ item }">
-        <v-icon color="green accent-4" class="mr-2" @click="editItem(item)">
+        <v-icon color="green accent-4" class="mr-2" @click="editProduct(item)">
           mdi-pencil
         </v-icon>
-        <v-icon color="red" @click="deleteItem(item)"> mdi-delete </v-icon>
+        <v-icon color="red" @click="deleteProduct(item._id)">
+          mdi-delete
+        </v-icon>
       </template>
 
-      <template v-slot:no-data>
-        <v-btn color="primary" @click="initialize"> Reset </v-btn>
+      <template v-slot:no-results>
+        <v-alert :value="true" color="orange" icon="warning" dark class="mt-2">
+          Tú busqueda {{ search }} no existe!
+        </v-alert>
       </template>
     </v-data-table>
+
+    <v-snackbar v-model="snackbar" bottom right :color="color">
+      {{ text }}
+      <v-btn color="black" text @click="snackbar = false"> Cerrar </v-btn>
+    </v-snackbar>
   </v-container>
 </template>
 
 
 <script>
+import {
+  getAllProducts,
+  createProduct,
+  updateProduct,
+  deleteProduct
+} from "../../controllers/ProductsController";
+
 export default {
   data: () => ({
     rules: [(v) => v.length <= 250 || "Max 250 carácteres"],
     units: ["Libra", "Kilo", "Arroba", "Bulto", "Canasta", "Carga"],
-    categories: ["Verduras", "Frutas", "Cereales", "Hortalizas", "Tubérculos", "Granos"],
+    categories: [
+      "Verduras",
+      "Frutas",
+      "Cereales",
+      "Hortalizas",
+      "Tubérculos",
+      "Granos",
+    ],
     dialog: false,
     dialogDelete: false,
     headers: [
+      { text: "Código producto", value: "codeProduct" },
       {
         text: "Nombre del producto",
         align: "start",
@@ -155,30 +205,35 @@ export default {
       },
       { text: "Unidad de medida", value: "unit" },
       { text: "Precio", value: "price" },
-      { text: "Imagen", value: "image" },
       { text: "Stock", value: "stock" },
       { text: "Categoría", value: "category" },
-      { text: "Descripción", value: "desc" },
+      { text: "Descripción", value: "description" },
       { text: "Acciones", value: "actions", sortable: false },
     ],
     products: [],
-    editedIndex: -1,
+    productIndex: -1,
+    search: "",
+    snackbar: false,
+    text: "",
+    color: "",
 
-    editedItem: {
+    product: {
+      codeProduct: "",
       name: "",
       unit: "",
       price: "",
-      image: "",
+      src: "",
       stock: "",
       category: "",
       desc: "",
     },
-    defaultItem: {
+    default: {
+      codeProduct: "",
       name: "",
-      unit: "",
-      price: "",
-      image: "",
-      stock: "",
+      unit: "0",
+      price: "0",
+      src: "",
+      stock: "0",
       category: "",
       desc: "",
     },
@@ -186,7 +241,7 @@ export default {
 
   computed: {
     formTitle() {
-      return this.editedIndex === -1 ? "Crear producto" : "Editar producto";
+      return this.productIndex === -1 ? "Crear producto" : "Editar producto";
     },
   },
 
@@ -200,127 +255,116 @@ export default {
   },
 
   created() {
-    this.initialize();
+    this.loadAllProducts();
   },
 
   methods: {
-    initialize() {
-      this.products = [
-        {
-          name: "Arroz",
-          unit: "Arroba",
-          price: 25000,
-          image: "",
-          stock: 24,
-          category: "Granos",
-          desc: "Producto económico con alto valor nutricional",
-        },
-        {
-          name: "Lentejas",
-          unit: "Libra",
-          price: 2500,
-          image: "",
-          stock: 30,
-          category: "Granos",
-          desc: "Producto reciente y fresco por libras",
-        },
-        {
-          name: "Frijoles",
-          unit: "Kilo",
-          price: 4700,
-          image: "",
-          stock: 15,
-          category: "Granos",
-          desc: "Producto disponible por kg",
-        },
-        {
-          name: "Papa",
-          unit: "Bulto",
-          price: 45000,
-          image: "",
-          stock: 250,
-          category: "Tubérculos",
-          desc: "Producto originario de las tierras boyacenses",
-        },
-        {
-          name: "Maíz",
-          unit: "Carga",
-          price: 130000,
-          image: "",
-          stock: 5,
-          category: "Cereales",
-          desc: "Producto multiuso",
-        },
-        {
-          name: "Naranja",
-          unit: "Bulto",
-          price: 60000,
-          image: "",
-          stock: 10,
-          category: "Frutas",
-          desc: "Producto fresco proveniente de la sabana de Bogotá",
-        },
-        {
-          name: "Fresa",
-          unit: "Libra",
-          price: 3000,
-          image: "",
-          stock: 85,
-          category: "Frutas",
-          desc: "Producto empaquetado por bolsas",
-        },
-        {
-          name: "Limón",
-          unit: "Carga",
-          price: 60400,
-          image: "",
-          stock: 78,
-          category: "Frutas",
-          desc: "Producto importado de Ecuador",
-        },
-      ];
+
+    loadAllProducts() {
+      getAllProducts()
+        .then((response) => {
+          this.products = response.data;
+        })
+        .catch((err) => console.error(err));
     },
 
-    editItem(item) {
-      this.editedIndex = this.products.indexOf(item);
-      this.editedItem = Object.assign({}, item);
+    save() {
+      if (this.productIndex > -1) {
+        this.updateProd();
+      } else {
+        this.createProd();
+      }
+      this.close();
+    },
+
+    createProd() {
+      let request = null;
+      const product = {
+        codeProduct: this.product.codeProduct,
+        name: this.product.name,
+        unit: this.product.unit,
+        price: this.product.price,
+        stock: this.product.stock,
+        category: this.product.category,
+        description: this.product.description,
+      };
+      request = createProduct(product);
+      
+      request
+        .then(() => {
+          (this.color = "success"),
+            (this.text = "El producto se ha creado correctamente!"),
+            (this.snackbar = true);
+        })
+        .catch((err) => console.error(err));
+        this.close();
+        this.loadAllProducts();
+    
+    },
+
+    updateProd() {
+      const product = {
+        codeProduct: this.product.codeProduct,
+        name: this.product.name,
+        unit: this.product.unit,
+        price: this.product.price,
+        stock: this.product.stock,
+        category: this.product.category,
+        description: this.product.description,
+      };
+
+      updateProduct(this._id, product)
+        .then((res) => {
+          console.log(res);
+          (this.color = "info"),
+            (this.text = "El producto ha sido modificado correctamente!"),
+            (this.snackbar = true);
+        })
+        .catch((err) => console.error(err));
+        this.close();
+        this.loadAllProducts();
+
+    },
+
+    editProduct(item) {
+      this.productIndex = this.products.indexOf(item);
+      this.$router.push(`/products/${this.product._id}`);
+      this.product = Object.assign({}, item);
       this.dialog = true;
     },
 
-    deleteItem(item) {
-      this.editedIndex = this.products.indexOf(item);
-      this.editedItem = Object.assign({}, item);
+    deleteProduct(item) {
+      this.productIndex = this.products.indexOf(item);
+      this.product = Object.assign({}, item);
       this.dialogDelete = true;
     },
 
     deleteItemConfirm() {
-      this.products.splice(this.editedIndex, 1);
-      this.closeDelete();
+      //this.products.splice(this.productIndex, 1);
+      //this.closeDelete();
+
+      deleteProduct(this.product._id)
+          .then(() => {
+            this.loadAllProducts();
+            this.closeDelete();
+          })
+          .catch((err) => console.error(err.response.data.message));
     },
 
     close() {
       this.dialog = false;
       this.$nextTick(() => {
-        this.editedItem = Object.assign({}, this.defaultItem);
-        this.editedIndex = -1;
+        this.product = Object.assign({}, this.default);
+        this.productIndex = -1;
       });
     },
 
     closeDelete() {
       this.dialogDelete = false;
       this.$nextTick(() => {
-        this.editedItem = Object.assign({}, this.defaultItem);
-        this.editedIndex = -1;
+        this.product = Object.assign({}, this.default);
+        this.productIndex = -1;
       });
-    },
-
-    save() {
-      if (this.editedIndex > -1) {
-        Object.assign(this.products[this.editedIndex], this.editedItem);
-      } else {
-        this.products.push(this.editedItem);
-      }
-      this.close();
     },
   },
 };

@@ -12,7 +12,7 @@
               <strong>{{ descrip }}</strong>
             </div>
             <v-divider></v-divider>
-            <div v-text="product.desc"></div>
+            <div v-text="product.description"></div>
             <div><strong>Precio: </strong> $ {{ product.price }}</div>
           </v-card-text>
 
@@ -131,7 +131,6 @@ export default {
   methods: {
     reserve() {
       this.loading = true;
-
       setTimeout(() => (this.loading = false), 2000);
     },
   },

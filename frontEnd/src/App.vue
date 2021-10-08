@@ -74,20 +74,16 @@ export default {
       {
         title: "Dashboard",
         icon: "mdi-view-dashboard",
-        link: "/admin/dashboard",
+        link: "/products/dashboard",
       },
       {
         title: "Productos",
         icon: "mdi-clipboard-list",
-        link: "/admin/myproducts",
+        link: "/products",
       },
-      {
-        title: "Producto prueba",
-        icon: "mdi-briefcase-eye",
-        link: "/user/listproducts",
-      },
-      { title: "About", icon: "mdi-forum", link: "/about" },
       { title: "Team", icon: "mdi-microsoft-teams", link: "/team" },
+      { title: "About", icon: "mdi-forum", link: "/about" }
+      
     ],
   }),
 };

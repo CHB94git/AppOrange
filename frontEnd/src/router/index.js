@@ -35,20 +35,16 @@ const routes = [
     component: () => import('../views/About.vue')
   },
   {
-    path: '/admin/dashboard',
+    path: '/products/dashboard',
     name: 'dashboard',
     component: () => import('../views/products/CrudProductos.vue')
   },
   {
-    path: '/admin/myproducts',
+    path: '/products',
     name: 'Listproducts',
-    component: () => import('../views/products/MyListProducts.vue')
+    component: () => import('../views/products/ListProducts.vue')
   },
-  {
-    path: '/user/listproducts',
-    name: 'catalog',
-    component: () => import('../views/user/ListProducts.vue')
-  }
+  
 ]
 
 const router = new VueRouter({

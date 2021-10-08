@@ -32,8 +32,8 @@ module.exports = class ProductController {
                 const srcName = req.file.filename;
                 product.src = "/"+srcName;
             }
-            if (product.id == undefined) {
-                res.status(400).json({ message: "El producto no puede ser guardado sin id" });
+            if (product.codeProduct == undefined) {
+                res.status(400).json({ message: "El producto no puede ser guardado sin código" });
             } else {
                 product = await productModel.create(product);
                 res.status(201).json(product);
