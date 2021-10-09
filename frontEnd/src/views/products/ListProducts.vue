@@ -1,9 +1,13 @@
 <template>
   <v-container fluid>
     <v-row dense>
-      <v-col v-for="product in products" :key="product.id">
+      <v-col v-for="product in displayedProducts" :key="product.id">
         <v-card class="mx-auto my-2" max-width="400">
-          <v-img class="white--text align-end" height="240px" :src="product.src">
+          <v-img
+            class="white--text align-end"
+            height="240px"
+            :src="product.src"
+          >
             <v-card-title v-text="product.name"></v-card-title>
           </v-img>
 
@@ -17,7 +21,13 @@
           </v-card-text>
 
           <v-card-actions>
-            <v-btn color="orange" outlined @click="dialog = true" text class="elevation-3">
+            <v-btn
+              color="orange"
+              outlined
+              @click="dialog = true"
+              text
+              class="elevation-3"
+            >
               <v-icon>mdi-eye</v-icon> Ver más...
             </v-btn>
           </v-card-actions>
@@ -25,83 +35,92 @@
       </v-col>
     </v-row>
 
-    
-      <v-dialog v-model="dialog" persistent max-width="400px">
-        
-        <v-card :loading="loading" class="mx-auto" max-width="95%">
-          <template slot="progress">
-            <v-progress-linear
-              color="deep-purple"
-              height="10"
-              indeterminate
-            ></v-progress-linear>
-          </template>
+    <v-dialog v-model="dialog" persistent max-width="400px">
+      <v-card :loading="loading" class="mx-auto" max-width="96%">
+        <template slot="progress">
+          <v-progress-linear
+            color="deep-purple"
+            height="10"
+            indeterminate
+          ></v-progress-linear>
+        </template>
 
-          <v-img
-            height="250"
-            src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
-          ></v-img>
+        <v-img
+          height="250"
+          src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
+        ></v-img>
 
-          <v-card-title>Cafe Badilico</v-card-title>
+        <v-card-title>Cafe Badilico</v-card-title>
 
-          <v-card-text>
-            <v-row align="center" class="mx-0">
-              <v-rating
-                :value="4.5"
-                color="amber"
-                dense
-                half-increments
-                readonly
-                size="14"
-              ></v-rating>
+        <v-card-text>
+          <v-row align="center" class="mx-0">
+            <v-rating
+              :value="4.5"
+              color="amber"
+              dense
+              half-increments
+              readonly
+              size="14"
+            ></v-rating>
 
-              <div class="grey--text ms-4">4.5 (413)</div>
-            </v-row>
+            <div class="grey--text ms-4">4.5 (413)</div>
+          </v-row>
 
-            <div class="my-4 text-subtitle-1">$ • Italian, Cafe</div>
+          <div class="my-4 text-subtitle-1">$ • Italian, Cafe</div>
 
-            <div>
-              Small plates, salads & sandwiches - an intimate setting with 12
-              indoor seats plus patio seating.
-            </div>
-          </v-card-text>
+          <div>
+            Small plates, salads & sandwiches - an intimate setting with 12
+            indoor seats plus patio seating.
+          </div>
+        </v-card-text>
 
-          <v-divider class="mx-4"></v-divider>
+        <v-divider class="mx-4"></v-divider>
 
-          <v-card-title>Tonight's availability</v-card-title>
+        <v-card-title>Tonight's availability</v-card-title>
 
-          <v-card-text>
-            <v-chip-group
-              v-model="selection"
-              active-class="green accent-4 white--text"
-              column
-            >
-              <v-chip>5:30PM</v-chip>
+        <v-card-text>
+          <v-chip-group
+            v-model="selection"
+            active-class="green accent-4 white--text"
+            column
+          >
+            <v-chip>5:30PM</v-chip>
 
-              <v-chip>7:30PM</v-chip>
+            <v-chip>7:30PM</v-chip>
 
-              <v-chip>8:00PM</v-chip>
+            <v-chip>8:00PM</v-chip>
 
-              <v-chip>9:00PM</v-chip>
-            </v-chip-group>
-          </v-card-text>
+            <v-chip>9:00PM</v-chip>
+          </v-chip-group>
+        </v-card-text>
 
-          <v-card-actions>
-            <v-btn color="orange accent-2" text @click="reserve">
-              <v-icon>mdi-cart</v-icon>
-              Reserve
-            </v-btn>
-            <v-spacer></v-spacer>
-            <v-btn color="red" text @click="dialog = false">
-              Close
-            </v-btn>
-          </v-card-actions>
-        </v-card>
+        <v-card-actions>
+          <v-btn color="orange accent-2" text @click="reserve">
+            <v-icon>mdi-cart</v-icon>
+            Reserve
+          </v-btn>
+          <v-spacer></v-spacer>
+          <v-btn color="red" text @click="dialog = false"> Close </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
 
-      </v-dialog>
-    
-    <div class="text-center my-2">
-      <v-pagination v-model="page" :length="5"></v-pagination>
+    <div class="text-center my-1">
+      <v-container>
+        <v-row justify="center">
+          <v-col cols="6">
+            <v-container class="max-width">
+              <v-pagination
+                v-model="page"
+                :length="length"
+                prev-icon="mdi-menu-left"
+                next-icon="mdi-menu-right"
+              >
+              </v-pagination>
+            </v-container>
+          </v-col>
+        </v-row>
+      </v-container>
     </div>
   </v-container>
 </template>
@@ -112,19 +131,20 @@ import { getAllProducts } from "../../controllers/ProductsController";
 
 export default {
   data() {
-    return{
-    products: [],
-    dialog: false,
-    loading: false,
-    selection: 1,
-    descrip: "Descripción",
-    page: 1,
+    return {
+      products: [],
+      dialog: false,
+      loading: false,
+      selection: 1,
+      descrip: "Descripción",
+      page: 1,
+      length: 2,
     };
   },
   created() {
     getAllProducts()
       .then((response) => {
-        this.products = response.data
+        this.products = response.data;
       })
       .catch((err) => console.error(err));
   },
@@ -134,6 +154,13 @@ export default {
       setTimeout(() => (this.loading = false), 2000);
     },
   },
-  
+  computed: {
+    displayedProducts() {
+      const { page, length, products } = this;
+      const number = Math.ceil(products.length / length); // Numero de elementos a mostrar por página
+      console.log(number);
+      return this.products.slice((page - 1) * number, page * number);
+    },
+  },
 };
 </script>

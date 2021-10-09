@@ -335,7 +335,7 @@ export default {
     },
 
     deleteItemConfirm() {
-      deleteProduct(this._id)
+      deleteProduct(this.product._id)
         .then((res) => {
           console.log(res);
           //window.location.reload();
@@ -352,6 +352,21 @@ export default {
         });
       this.closeDelete();
     },
+
+   /* eliminarNota(id){
+  this.axios.delete(`nota/${id}`)
+    .then(res => {
+      let index = this.notas.findIndex( item => item._id === res.data._id )
+      this.notas.splice(index, 1);
+
+      this.showAlert();
+      this.mensaje.texto = 'Notas Eliminada!'
+      this.mensaje.color = 'danger'
+    })
+    .catch( e => {
+      console.log(e.response);
+    })
+}, */
 
     close() {
       this.dialog = false;
