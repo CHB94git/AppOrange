@@ -156,8 +156,8 @@
       </template>
 
       <template v-slot:no-results>
-        <v-alert :value="true" color="orange" icon="warning" dark class="mt-2">
-          Tú busqueda {{ search }} no existe!
+        <v-alert :value="true" color="red accent-2" icon="warning" dark class="mt-2">
+          Tú busqueda "{{ search }}" no existe!
         </v-alert>
       </template>
     </v-data-table>
@@ -335,10 +335,9 @@ export default {
     },
 
     deleteItemConfirm() {
-      deleteProduct(this.product._id)
+     deleteProduct(this.product._id)
         .then((res) => {
           console.log(res);
-          //window.location.reload();
           this.color = "success";
           this.text = "El producto ha sido eliminado";
           this.snackbar = true;
@@ -352,21 +351,6 @@ export default {
         });
       this.closeDelete();
     },
-
-   /* eliminarNota(id){
-  this.axios.delete(`nota/${id}`)
-    .then(res => {
-      let index = this.notas.findIndex( item => item._id === res.data._id )
-      this.notas.splice(index, 1);
-
-      this.showAlert();
-      this.mensaje.texto = 'Notas Eliminada!'
-      this.mensaje.color = 'danger'
-    })
-    .catch( e => {
-      console.log(e.response);
-    })
-}, */
 
     close() {
       this.dialog = false;
