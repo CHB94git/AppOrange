@@ -150,13 +150,17 @@
         <v-icon color="green accent-4" class="mr-2" @click="editProduct(item)">
           mdi-pencil
         </v-icon>
-        <v-icon color="red" @click="deleteProduct(item._id)">
-          mdi-delete
-        </v-icon>
+        <v-icon color="red" @click="deleteProduct(item)"> mdi-delete </v-icon>
       </template>
 
       <template v-slot:no-results>
-        <v-alert :value="true" color="red accent-2" icon="warning" dark class="mt-2">
+        <v-alert
+          :value="true"
+          color="red accent-2"
+          icon="warning"
+          dark
+          class="mt-2"
+        >
           Tú busqueda "{{ search }}" no existe!
         </v-alert>
       </template>
@@ -309,7 +313,7 @@ export default {
         category: this.product.category,
         description: this.product.description,
       };
-
+      console.log(this.product._id);
       updateProduct(this.product._id, product)
         .then((res) => {
           console.log(res);
@@ -335,7 +339,8 @@ export default {
     },
 
     deleteItemConfirm() {
-     deleteProduct(this.product._id)
+      console.log(this.product._id);
+      deleteProduct(this.product._id)
         .then((res) => {
           console.log(res);
           this.color = "success";

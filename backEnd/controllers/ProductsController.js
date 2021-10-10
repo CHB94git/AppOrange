@@ -57,8 +57,8 @@ module.exports = class ProductController {
     static async delete(req, res) {
         try {
             const id = req.params.id;
-            await productModel.deleteOne({ id: id });
-            res.status(200).json();
+            const del = await productModel.findByIdAndRemove({_id:id});
+            res.status(200).json(del);
         } catch (err) {
             res.status(400).json({ message: err.message });
         }
