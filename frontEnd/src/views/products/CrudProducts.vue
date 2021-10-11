@@ -66,15 +66,21 @@
                         ></v-text-field>
                       </v-col>
 
-                      <v-col cols="12" sm="6">
-                        <v-select
-                          v-model="product.unit"
-                          :items="units"
-                          label="Unidad de medida"
-                        ></v-select>
+                      <v-col cols="12">
+                        <v-text-field
+                          v-model="product.src"
+                          label="Link imagen (fuente)"
+                        ></v-text-field>
                       </v-col>
 
-                      <v-col cols="12" sm="6">
+                      <v-col cols="12" sm="4">
+                        <v-text-field
+                          v-model="product.stock"
+                          label="Stock"
+                          type="number"
+                        ></v-text-field>
+                      </v-col>
+                      <v-col cols="12" sm="4">
                         <v-text-field
                           v-model="product.price"
                           label="Precio"
@@ -83,22 +89,7 @@
                         ></v-text-field>
                       </v-col>
 
-                      <v-col cols="12">
-                        <v-text-field
-                          v-model="product.src"
-                          label="Link imagen (fuente)"
-                        ></v-text-field>
-                      </v-col>
-
-                      <v-col cols="12" sm="6">
-                        <v-text-field
-                          v-model="product.stock"
-                          label="Stock"
-                          type="number"
-                        ></v-text-field>
-                      </v-col>
-
-                      <v-col cols="12" sm="6">
+                      <v-col cols="12" sm="4">
                         <v-select
                           v-model="product.category"
                           :items="categories"
@@ -203,7 +194,6 @@ export default {
         align: "start",
         value: "name",
       },
-      { text: "Unidad de medida", value: "unit" },
       { text: "Precio", value: "price" },
       { text: "Stock", value: "stock" },
       { text: "Categoría", value: "category" },
@@ -220,7 +210,6 @@ export default {
     product: {
       codeProduct: "",
       name: "",
-      unit: "",
       price: "",
       src: "",
       stock: "",
@@ -230,7 +219,6 @@ export default {
     default: {
       codeProduct: "",
       name: "",
-      unit: "0",
       price: "0",
       src: "",
       stock: "0",
@@ -281,7 +269,6 @@ export default {
       const product = {
         codeProduct: this.product.codeProduct,
         name: this.product.name,
-        unit: this.product.unit,
         price: this.product.price,
         src: this.product.src,
         stock: this.product.stock,
@@ -306,7 +293,6 @@ export default {
       const product = {
         codeProduct: this.product.codeProduct,
         name: this.product.name,
-        unit: this.product.unit,
         price: this.product.price,
         src: this.product.src,
         stock: this.product.stock,

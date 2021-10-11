@@ -68,17 +68,17 @@ export default {
       { title: "Home", icon: "mdi-home", link: "/" },
       { title: "Login", icon: "mdi-login", link: "/login" },
       {
-        title: "Dashboard productos",
+        title: "CRUD Productos",
         icon: "mdi-view-dashboard",
         link: "/products/dashboard",
       },
       {
-        title: "Productos",
+        title: "Lista de Productos",
         icon: "mdi-clipboard-list",
         link: "/products",
       },
       {
-        title: "Dashboard categorías",
+        title: "CRUD Categorías",
         icon: "mdi-view-dashboard",
         link: "/categories/dashboard",
       },
