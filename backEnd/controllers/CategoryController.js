@@ -1,11 +1,11 @@
-const productModel = require("../models/ProductModel");
+const categoryModel = require("../models/CategoryModel");
 
-module.exports = class ProductController {
+module.exports = class CategoryController {
     
-    static async getAllProducts(req, res) {
+    static async getAll(req, res) {
         try {
-            const products = await productModel.find();
-            res.status(200).json(products);
+            const categories = await categoryModel.find();
+            res.status(200).json(categories);
         } catch (err) {
             res.status(404).json({ message: err.message });
         }
@@ -14,11 +14,11 @@ module.exports = class ProductController {
     static async getById(req, res) {
         try {
             const id = req.params.id;
-            const product = await productModel.findById({ _id: id });
-            if (product == null) {
+            const category = await categoryModel.findById({ _id: id });
+            if (category == null) {
                 res.status(404).json({ message: "No encontrado en la base de datos" });
             } else {
-                res.status(200).json(product);
+                res.status(200).json(category);
             }
         } catch (err) {
             res.status(400).json({ message: err.message });
@@ -27,16 +27,16 @@ module.exports = class ProductController {
 
     static async create(req, res) {
         try {
-            let product = req.body;
+            let category = req.body;
             if (req.file != undefined) {
                 const srcName = req.file.filename;
-                product.src = "/" + srcName;
+                category.src = "/" + srcName;
             }
-            if (product.codeProduct == undefined) {
-                res.status(400).json({ message: "El producto no puede ser guardado sin código" });
+            if (category.codeCategory == undefined) {
+                res.status(400).json({ message: "La categoría no puede ser guardado sin código" });
             } else {
-                product = await productModel.create(product);
-                res.status(201).json(product);
+                category = await categoryModel.create(category);
+                res.status(201).json(category);
             }
         } catch (err) {
             res.status(400).json({ message: err.message });
@@ -46,8 +46,8 @@ module.exports = class ProductController {
     static async update(req, res) {
         try {
             const id = req.params.id;
-            const product = req.body;
-            await productModel.updateOne({ _id: id }, product);
+            const category = req.body;
+            await categoryModel.updateOne({ _id: id }, category);
             res.status(200).json()
         } catch (err) {
             res.status(400).json({ message: err.message })
@@ -57,18 +57,18 @@ module.exports = class ProductController {
     static async delete(req, res) {
         try {
             const id = req.params.id;
-            const del = await productModel.findByIdAndRemove({_id:id});
+            const del = await categoryModel.findByIdAndRemove({_id:id});
             res.status(200).json(del);
         } catch (err) {
             res.status(400).json({ message: err.message });
         }
     }
 
-    static async changeProductSrc(req, res) {
+    static async changecategoriesrc(req, res) {
         try {
             const id = req.params.id;
             const srcName = req.file.filename;
-            await productModel.updateOne({ _id: id }, { "src": "/" + srcName });
+            await categoryModel.updateOne({ _id: id }, { "src": "/" + srcName });
             res.status(200).json();
         } catch (err) {
             res.status(400).json({ message: err.message });

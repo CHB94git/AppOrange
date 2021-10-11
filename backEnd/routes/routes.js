@@ -1,6 +1,7 @@
 const express = require("express");
 
 const productController = require("../controllers/ProductsController");
+const categoryController = require("../controllers/CategoryController");
 
 
 //Multer configuration
@@ -27,6 +28,12 @@ router.post("/products", upload.single("image"), productController.create);
 router.put("/products/:id", productController.update);
 router.delete("/products/:id", productController.delete);
 router.patch("/products/:id/image", upload.single("image"), productController.changeProductSrc);
+
+router.get("/categories", categoryController.getAll);
+router.get("/categories/:id", categoryController.getById);
+router.post("/categories", upload.single("image"), categoryController.create);
+router.put("/categories/:id", categoryController.update);
+router.delete("/categories/:id", categoryController.delete);
 
 
 module.exports = router;

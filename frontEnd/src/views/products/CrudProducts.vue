@@ -225,7 +225,7 @@ export default {
       src: "",
       stock: "",
       category: "",
-      desc: "",
+      description: "",
     },
     default: {
       codeProduct: "",
@@ -235,7 +235,7 @@ export default {
       src: "",
       stock: "0",
       category: "",
-      desc: "",
+      description: "",
     },
   }),
 

@@ -37,12 +37,17 @@ const routes = [
   {
     path: '/products/dashboard',
     name: 'dashboard',
-    component: () => import('../views/products/CrudProductos.vue')
+    component: () => import('../views/products/CrudProducts.vue')
   },
   {
     path: '/products',
     name: 'Listproducts',
     component: () => import('../views/products/ListProducts.vue')
+  },
+  {
+    path: '/categories/dashboard',
+    name: 'dashboard',
+    component: () => import('../views/categories/CrudCategories.vue')
   },
   
 ]

@@ -52,16 +52,12 @@
 
 <script>
 import AppFooter from "./components/AppFooter.vue";
-//import Header from './components/AppHeader.vue';
-//import MyProducts from './views/admin/MyListProducts.vue';
 
 export default {
   name: "App",
 
   components: {
     AppFooter,
-    //MyProducts,
-    //Header,
   },
 
   data: () => ({
@@ -72,7 +68,7 @@ export default {
       { title: "Home", icon: "mdi-home", link: "/" },
       { title: "Login", icon: "mdi-login", link: "/login" },
       {
-        title: "Dashboard",
+        title: "Dashboard productos",
         icon: "mdi-view-dashboard",
         link: "/products/dashboard",
       },
@@ -81,6 +77,12 @@ export default {
         icon: "mdi-clipboard-list",
         link: "/products",
       },
+      {
+        title: "Dashboard categorías",
+        icon: "mdi-view-dashboard",
+        link: "/categories/dashboard",
+      },
+
       { title: "Team", icon: "mdi-microsoft-teams", link: "/team" },
       { title: "About", icon: "mdi-forum", link: "/about" }
       
