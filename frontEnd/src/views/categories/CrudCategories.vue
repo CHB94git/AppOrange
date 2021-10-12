@@ -148,6 +148,7 @@ export default {
     dialog: false,
     dialogDelete: false,
     headers: [
+      { text: "ID", value: "_id" },
       { text: "Código categoría", value: "codeCategory" },
       {
         text: "Nombre categoría",
@@ -165,6 +166,7 @@ export default {
     color: "",
 
     category: {
+      _id: "",
       codeCategory: "",
       name: "",
       description: "",

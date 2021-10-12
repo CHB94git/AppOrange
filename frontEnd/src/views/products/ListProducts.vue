@@ -12,23 +12,22 @@
           </v-img>
 
           <v-card-text class="text--primary">
-            <div>
-              <strong>{{ descrip }}</strong>
-            </div>
-            <v-divider></v-divider>
-            <div v-text="product.description"></div>
-            <div><strong>Precio: </strong> $ {{ product.price }}</div>
+            <div><strong>Categoría: </strong> {{ product.category }}</div>
           </v-card-text>
+
+          <v-divider></v-divider>
+          <v-card-text><strong>Descripción</strong> <br> {{product.description}}</v-card-text>
 
           <v-card-actions>
             <v-btn
-              color="orange"
+              color="green accent-4"
               outlined
+              block
               @click="(dialog = true), getOneProduct(product)"
-              text
-              class="elevation-3"
+              class="elevation-5"
             >
-              <v-icon>mdi-eye</v-icon> Ver más...
+              <v-icon class="xs">mdi-eye</v-icon> 
+              Ver más...
             </v-btn>
           </v-card-actions>
         </v-card>
@@ -47,30 +46,30 @@
 
         <v-img height="250" v-model="src" :src="this.src"></v-img>
 
-        <v-card-title v-model="name">{{ this.name }}</v-card-title>
-        <v-card-subtitle v-model="codeProduct">{{
-          this.codeProduct
-        }}</v-card-subtitle>
-        <v-card-text v-model="stock">
-          {{ this.stock }}
-        </v-card-text>
-        <v-card-text v-model="price">
-          {{ this.price }}
-        </v-card-text>
+        <v-card-title v-model="name"> {{ this.name }}</v-card-title>
+        
+        <v-card-text v-model="category">Categoría: {{ this.category }}</v-card-text>
+        <v-spacer></v-spacer>
+        <v-card-text v-model="codeProduct"
+          >Código del producto: {{ this.codeProduct }}</v-card-text
+        >
+        <v-card-text v-model="stock"> Stock: {{ this.stock }} </v-card-text>
+        <v-card-text v-model="price"> Precio: ${{ this.price }} </v-card-text>
 
-        <v-divider class="mx-4"></v-divider>
+        <v-divider class="mx-2"></v-divider>
 
-        <v-card-title v-model="description">{{
-          this.description
-        }}</v-card-title>
+        <v-card-title v-model="description"
+          >Descripción <br></v-card-title
+        >
+        <v-card-text cols="12">{{ this.description }}</v-card-text>
 
         <v-card-actions>
           <v-btn color="orange accent-2" text @click="reserve">
             <v-icon>mdi-cart</v-icon>
-            Reserve
+            Añadir
           </v-btn>
           <v-spacer></v-spacer>
-          <v-btn color="red" text @click="dialog = false"> Close </v-btn>
+          <v-btn color="red" text @click="dialog = false"> Cerrar </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -107,13 +106,12 @@ export default {
       selection: 1,
       descrip: "Descripción",
       page: 1,
-      length: 2,
+      length: '',
       products: [],
       product: "",
       id: "",
       codeProduct: "",
       name: "",
-      unit: "",
       price: "",
       src: "",
       stock: "",
@@ -149,13 +147,8 @@ export default {
         })
         .catch((err) => console.error(err));
     },
+},
 
-    /*.then((res) => {
-          console.log(res);
-          this.product = res.data;
-        })
-        .catch((err) => console.error(err)); */
-  },
   computed: {
     displayedProducts() {
       const { page, length, products } = this;
