@@ -20,7 +20,7 @@
                             text-center
                             display-2
                             brown--text
-                            text--lighten-1
+                            text--darken-1
                           "
                         >
                           Iniciar sesión
@@ -35,7 +35,7 @@
                             name="Email"
                             prepend-icon="email"
                             type="text"
-                            color="brown lighten-1"
+                            color="brown darken-1"
                           />
 
                           <v-text-field
@@ -46,22 +46,22 @@
                             @click:append="showPassword = !showPassword"
                             name="password"
                             prepend-icon="lock"
-                            color="brown lighten-1"
+                            color="brown darken-1"
                           />
                         </v-form>
                       </v-card-text>
                       <div class="text-center mb-2">
-                        <v-btn rounded color="brown lighten-1" dark
+                        <v-btn rounded color="brown darken-1" dark
                           >INGRESAR</v-btn
                         >
                       </div>
                     </v-col>
-                    <v-col cols="12" md="4" class="brown lighten-1">
+                    <v-col cols="12" md="4" class="brown darken-1">
                       <v-card-text class="white--text ">
                         <h1 class="text-center display-1 mt-8"><strong>No tienes una cuenta?</strong></h1>
-                        <h5 class="text-center">
+                        <h4 class="text-center">
                           Ingresa tus datos personales para unirte a nosotros
-                        </h5>
+                        </h4>
                       </v-card-text>
                       <div class="text-center">
                         <v-btn rounded outlined dark @click="step++, GoToRegister()" class="mb-2"
@@ -79,9 +79,9 @@
                         <h1 class="text-center display-1 ">
                           <strong>Ya tienes una cuenta?</strong> 
                         </h1>
-                        <h5 class="text-center">
+                        <h4 class="text-center">
                           Ingresa tus credenciales para iniciar sesión en tu cuenta
-                        </h5>
+                        </h4>
                       </v-card-text>
                       <div class="text-center">
                         <v-btn rounded outlined dark @click="step--, GoToLogin()" class="mb-1"
