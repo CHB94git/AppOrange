@@ -24,7 +24,7 @@
             <v-btn
               color="orange"
               outlined
-              @click="(dialog = true), getOneProduct()"
+              @click="(dialog = true), getOneProduct(product)"
               text
               class="elevation-3"
             >
@@ -32,11 +32,10 @@
             </v-btn>
           </v-card-actions>
         </v-card>
-        
       </v-col>
     </v-row>
 
-    <v-dialog v-model="dialog"  max-width="400px">
+    <v-dialog v-model="dialog" max-width="400px">
       <v-card :loading="loading" class="mx-auto" max-width="96%">
         <template slot="progress">
           <v-progress-linear
@@ -46,26 +45,24 @@
           ></v-progress-linear>
         </template>
 
-        <v-img
-          height="250"
-          :src="product.src"
-        ></v-img>
+        <v-img height="250" v-model="src" :src="this.src"></v-img>
 
-        <v-card-title>{{product.name}}</v-card-title>
-
-        <v-card-text>
-          <div>
-            {{product.stock}}
-          </div>
-          <div>
-            {{product.price}}
-          </div>
+        <v-card-title v-model="name">{{ this.name }}</v-card-title>
+        <v-card-subtitle v-model="codeProduct">{{
+          this.codeProduct
+        }}</v-card-subtitle>
+        <v-card-text v-model="stock">
+          {{ this.stock }}
+        </v-card-text>
+        <v-card-text v-model="price">
+          {{ this.price }}
         </v-card-text>
 
         <v-divider class="mx-4"></v-divider>
 
-        <v-card-title>{{product.description}}</v-card-title>
-
+        <v-card-title v-model="description">{{
+          this.description
+        }}</v-card-title>
 
         <v-card-actions>
           <v-btn color="orange accent-2" text @click="reserve">
@@ -105,16 +102,15 @@ import { getAllProducts, getById } from "../../controllers/ProductsController";
 export default {
   data() {
     return {
-      products: [],
       dialog: false,
       loading: false,
       selection: 1,
       descrip: "Descripción",
       page: 1,
       length: 2,
-
-      product: {
-      _id: "",
+      products: [],
+      product: "",
+      id: "",
       codeProduct: "",
       name: "",
       unit: "",
@@ -123,7 +119,6 @@ export default {
       stock: "",
       category: "",
       description: "",
-    },
     };
   },
   created() {
@@ -139,15 +134,27 @@ export default {
       setTimeout(() => (this.loading = false), 2000);
     },
 
-    getOneProduct() {
-      const id = this.$route.params._id;
-      getById(id)
-        .then((res) => {
-          console.log(res);
-          this.product = res.data;
+    getOneProduct(product) {
+      getById(this.id)
+        .then(() => {
+          console.log(this.id);
+          this.id = product._id;
+          this.codeProduct = product.codeProduct;
+          this.name = product.name;
+          this.price = product.price;
+          this.src = product.src;
+          this.stock = product.stock;
+          this.category = product.category;
+          this.description = product.description;
         })
         .catch((err) => console.error(err));
     },
+
+    /*.then((res) => {
+          console.log(res);
+          this.product = res.data;
+        })
+        .catch((err) => console.error(err)); */
   },
   computed: {
     displayedProducts() {

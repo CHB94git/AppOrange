@@ -14,7 +14,7 @@ module.exports = class ProductController {
     static async getById(req, res) {
         try {
             const id = req.params.id;
-            const product = await productModel.findById({ _id: id });
+            const product = await productModel.findById({ _id: id }, req.body);
             if (product == null) {
                 res.status(404).json({ message: "No encontrado en la base de datos" });
             } else {
