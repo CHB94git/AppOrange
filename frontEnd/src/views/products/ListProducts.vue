@@ -16,7 +16,10 @@
           </v-card-text>
 
           <v-divider></v-divider>
-          <v-card-text><strong>Descripción</strong> <br> {{product.description}}</v-card-text>
+          <v-card-text
+            ><strong>Descripción</strong> <br />
+            {{ product.description }}</v-card-text
+          >
 
           <v-card-actions>
             <v-btn
@@ -26,7 +29,7 @@
               @click="(dialog = true), getOneProduct(product)"
               class="elevation-5"
             >
-              <v-icon class="xs">mdi-eye</v-icon> 
+              <v-icon class="xs">mdi-eye</v-icon>
               Ver más...
             </v-btn>
           </v-card-actions>
@@ -47,20 +50,24 @@
         <v-img height="250" v-model="src" :src="this.src"></v-img>
 
         <v-card-title v-model="name"> {{ this.name }}</v-card-title>
-        
-        <v-card-text v-model="category">Categoría: {{ this.category }}</v-card-text>
+
+        <v-card-text v-model="category"
+          ><b>Categoría: </b>{{ this.category }}</v-card-text
+        >
         <v-spacer></v-spacer>
         <v-card-text v-model="codeProduct"
-          >Código del producto: {{ this.codeProduct }}</v-card-text
+          ><b>Código del producto: </b>{{ this.codeProduct }}</v-card-text
         >
-        <v-card-text v-model="stock"> Stock: {{ this.stock }} </v-card-text>
-        <v-card-text v-model="price"> Precio: ${{ this.price }} </v-card-text>
+        <v-card-text v-model="stock">
+          <b>Stock: </b>{{ this.stock }}
+        </v-card-text>
+        <v-card-text v-model="price"
+          ><b>Precio: </b>${{ this.price }}
+        </v-card-text>
 
         <v-divider class="mx-2"></v-divider>
 
-        <v-card-title v-model="description"
-          >Descripción <br></v-card-title
-        >
+        <v-card-title v-model="description">Descripción <br /></v-card-title>
         <v-card-text cols="12">{{ this.description }}</v-card-text>
 
         <v-card-actions>
@@ -106,7 +113,7 @@ export default {
       selection: 1,
       descrip: "Descripción",
       page: 1,
-      length: '',
+      length: "",
       products: [],
       product: "",
       id: "",
@@ -147,7 +154,7 @@ export default {
         })
         .catch((err) => console.error(err));
     },
-},
+  },
 
   computed: {
     displayedProducts() {

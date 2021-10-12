@@ -176,7 +176,7 @@ import {
 export default {
   data: () => ({
     rules: [(v) => v.length <= 250 || "Max 250 carácteres"],
-    units: ["Libra", "Kilo", "Arroba", "Bulto", "Canasta", "Carga"],
+    //units: ["Libra", "Kilo", "Arroba", "Bulto", "Canasta", "Carga"],
     categories: [
       "Verduras",
       "Frutas",
@@ -284,9 +284,14 @@ export default {
             (this.snackbar = true);
           this.loadAllProducts();
         })
-        .catch((err) => console.error(err));
-
+        .catch((err) => {
+          console.error(err);
+          this.color = "error";
+          this.text = "Fallido!, Ha ocurrido un error.";
+          this.snackbar = true;
+        });
       this.close();
+      
     },
 
     update() {
@@ -308,20 +313,13 @@ export default {
             (this.snackbar = true);
           this.loadAllProducts();
         })
-        .catch((err) => console.error(err));
+        .catch((err) => {
+          console.error(err);
+          this.color = "error";
+          this.text = "Fallido!, Ha ocurrido un error.";
+          this.snackbar = true;
+        });
       this.close();
-    },
-
-    editProduct(item) {
-      this.productIndex = this.products.indexOf(item);
-      this.product = Object.assign({}, item);
-      this.dialog = true;
-    },
-
-    deleteProduct(item) {
-      this.productIndex = this.products.indexOf(item);
-      this.product = Object.assign({}, item);
-      this.dialogDelete = true;
     },
 
     deleteItemConfirm() {
@@ -341,6 +339,18 @@ export default {
           this.snackbar = true;
         });
       this.closeDelete();
+    },
+
+    editProduct(item) {
+      this.productIndex = this.products.indexOf(item);
+      this.product = Object.assign({}, item);
+      this.dialog = true;
+    },
+
+    deleteProduct(item) {
+      this.productIndex = this.products.indexOf(item);
+      this.product = Object.assign({}, item);
+      this.dialogDelete = true;
     },
 
     close() {

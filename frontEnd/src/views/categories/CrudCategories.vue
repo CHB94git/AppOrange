@@ -39,7 +39,7 @@
                 v-bind="attrs"
                 v-on="on"
               >
-                Nueva categoría 
+                Nueva categoría
               </v-btn>
             </template>
 
@@ -227,12 +227,16 @@ export default {
       request
         .then(() => {
           (this.color = "success"),
-            (this.text = "El producto se ha creado correctamente!"),
+            (this.text = "La categoría se ha creado correctamente!"),
             (this.snackbar = true);
           this.loadAll();
         })
-        .catch((err) => console.error(err));
-
+        .catch((err) => {
+          console.error(err);
+          this.color = "error";
+          this.text = "Fallido!, Ha ocurrido un error.";
+          this.snackbar = true;
+        });
       this.close();
     },
 
@@ -251,7 +255,12 @@ export default {
             (this.snackbar = true);
           this.loadAll();
         })
-        .catch((err) => console.error(err));
+        .catch((err) => {
+          console.error(err);
+          this.color = "error";
+          this.text = "Fallido!, Ha ocurrido un error.";
+          this.snackbar = true;
+        });
       this.close();
     },
 
