@@ -2,7 +2,7 @@ const express = require("express");
 
 const productController = require("../controllers/ProductsController");
 const categoryController = require("../controllers/CategoryController");
-
+const userController = require("../controllers/UserController");
 
 //Multer configuration
 const multer = require("multer");
@@ -34,6 +34,12 @@ router.get("/categories/:id", categoryController.getById);
 router.post("/categories", upload.single("image"), categoryController.create);
 router.put("/categories/:id", categoryController.update);
 router.delete("/categories/:id", categoryController.delete);
+
+
+//rutas de usuario
+router.post('/users/add', userController.add);
+router.post('/users/login', userController.login);
+
 
 
 module.exports = router;

@@ -21,7 +21,7 @@ mongoose.connect(process.env.DB_URI)
 
 app.use("/api", require("./routes/routes"));
 
-const port = process.env.PORT;
+const port = process.env.PORT || 3000;
 
 app.listen(port, () => console.log(`Running server in http://localhost:${port}`));
 

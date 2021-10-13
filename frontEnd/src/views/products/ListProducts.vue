@@ -113,7 +113,7 @@ export default {
       selection: 1,
       descrip: "Descripción",
       page: 1,
-      length: "",
+      length: 1,
       products: [],
       product: "",
       id: "",
